@@ -12,10 +12,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import lombok.Getter;
+import lombok.Data;
 
 @MappedSuperclass
-@Getter
+@Data
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
@@ -26,13 +26,16 @@ public class BaseEntity {
     @Column(nullable = false, updatable = false)
     private boolean ativo = true;
 
-    @Column
+    @Column(updatable = false)
     @CreatedDate
     private LocalDateTime createdAt;
 
     @Column
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at") 
+    private LocalDateTime deletedAt;
 
     public void setId(Long id) {
         this.id = id;
