@@ -13,5 +13,4 @@ public class ReservaController extends BaseController<ReservaDTO> {
     protected ReservaController(ReservaService service) {
         super(service);
     }
-    
-}
+}  

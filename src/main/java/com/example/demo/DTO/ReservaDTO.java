@@ -6,6 +6,7 @@ import com.example.demo.entity.Ambiente;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -37,4 +38,9 @@ public class ReservaDTO {
     @NotNull(message = "O ambiente deve ser preenchido")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Ambiente ambiente;
+
+    @AssertTrue(message = "O período de reserva deve ser antes da data fim")
+    public boolean periodoValido() {
+        return dataInicio.isBefore(dataFim);
+    }
 }

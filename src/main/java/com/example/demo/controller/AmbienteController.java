@@ -13,5 +13,4 @@ public class AmbienteController extends BaseController<AmbienteDTO> {
     protected AmbienteController(AmbienteService service) {
         super(service);
     }
-    
 }

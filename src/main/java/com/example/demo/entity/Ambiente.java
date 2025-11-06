@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "ambiente")
 public class Ambiente extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nome;
 
     @Column(nullable = false)
