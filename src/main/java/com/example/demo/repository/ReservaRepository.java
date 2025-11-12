@@ -1,6 +1,7 @@
 package com.example.demo.repository;
  
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,4 +25,24 @@ public interface ReservaRepository extends BaseRepository<Reserva, Long> {
         @Param("id") Long id,
         @Param("dataInicio") LocalDateTime dataInicio,
         @Param("dataFim") LocalDateTime dataFim);
+
+
+        @Query("""
+        SELECT r
+        FROM Reserva r
+        WHERE r.ativo = true
+        AND (
+        r.dataInicio BETWEEN :dataInicio AND :dataFim OR
+        r.dataFim BETWEEN :dataInicio AND :dataFim)
+        """)
+
+        List<Reserva> findByDatas(LocalDateTime dataInicio, LocalDateTime dataFim);
+
+        @Query("""
+        SELECT r
+        FROM Reserva r
+        WHERE r.ativo = true
+        AND r.ambiente.id = :ambienteId
+        """)
+        List<Reserva> findByAmbiente(@Param("ambienteId") Long ambienteId);
 }

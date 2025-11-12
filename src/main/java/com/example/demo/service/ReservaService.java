@@ -2,6 +2,9 @@ package com.example.demo.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +47,20 @@ public class ReservaService extends BaseService<Reserva, ReservaDTO> {
         return super.create(dto);
     }
 
+    public List<ReservaDTO> listaPorData(String dataInicio, String dataFim){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime inicio = LocalDate.parse(dataInicio, formatter).atStartOfDay();
+        LocalDateTime fim = LocalDate.parse(dataFim, formatter).atTime(23, 59, 59);
+
+        List<Reserva> reservas = repository.findByDatas(inicio, fim);
+        List<ReservaDTO> dtos = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+            dtos.add(super.toDto(reserva));
+        }
+        return dtos;
+    }
+
     // editar reserva apenas se não iniciada
     @Override
     public ReservaDTO update(Long id, ReservaDTO dto) {
@@ -58,4 +75,15 @@ public class ReservaService extends BaseService<Reserva, ReservaDTO> {
         // se passou na verificação, segue com a atualização normal
         return super.update(id, dto);
     }
+
+    public List<ReservaDTO> listaPorAmbiente(Long id) {
+        List<Reserva> reservas = repository.findByAmbiente(id);
+        List<ReservaDTO> dtos = new ArrayList<>(); 
+
+        for (Reserva reserva : reservas) {
+            dtos.add(super.toDto(reserva));
+        }
+    }
+
+    
 }

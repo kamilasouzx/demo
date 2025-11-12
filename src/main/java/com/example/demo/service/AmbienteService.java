@@ -23,5 +23,4 @@ public class AmbienteService extends BaseService<Ambiente, AmbienteDTO> {
         }
         super.delete(id);
     }
-    
 }
