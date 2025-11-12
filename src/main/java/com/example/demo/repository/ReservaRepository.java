@@ -45,4 +45,13 @@ public interface ReservaRepository extends BaseRepository<Reserva, Long> {
         AND r.ambiente.id = :ambienteId
         """)
         List<Reserva> findByAmbiente(@Param("ambienteId") Long ambienteId);
+
+        //listar por nome
+        @Query("""
+        SELECT r
+        FROM Reserva r
+        WHERE r.ativo = true
+        AND r.nome LIKE %:nome%
+        """)
+        List<Reserva> findByNome(@Param("nome") String nome);
 }

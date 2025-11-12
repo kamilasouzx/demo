@@ -83,7 +83,17 @@ public class ReservaService extends BaseService<Reserva, ReservaDTO> {
         for (Reserva reserva : reservas) {
             dtos.add(super.toDto(reserva));
         }
+        return dtos;
     }
 
-    
+    //listar por nome
+    public List<ReservaDTO> listaPorNome(String nome) {
+        List<Reserva> reservas = repository.findByNome(nome);
+        List<ReservaDTO> dtos = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+            dtos.add(super.toDto(reserva));
+        }
+        return dtos;
+    }
 }

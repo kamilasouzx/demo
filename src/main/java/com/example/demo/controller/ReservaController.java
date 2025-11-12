@@ -34,6 +34,10 @@ public class ReservaController extends BaseController<ReservaDTO> {
         return service.listaPorAmbiente(ambienteId);
     }
 
-    
+    //listar por nome
+    @GetMapping("/por-nome/{nome}")
+    public List<ReservaDTO> reservaPorNome(@PathVariable("nome") String nome) {
+        return service.listaPorNome(nome);
+    }
 }
 
